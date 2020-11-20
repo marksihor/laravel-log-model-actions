@@ -4,12 +4,14 @@
 namespace MarksIhor\LogModelActions;
 
 
+use MarksIhor\LogModelActions\Services\LogService;
+
 trait Logable
 {
     protected static function bootLogable()
     {
         static::created(function ($model) {
-            dd(1);
+            (new LogService())->created($model);
         });
     }
 
