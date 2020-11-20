@@ -1,0 +1,24 @@
+{
+    "name": "marksihor/laravel-log-model-actions",
+    "description": "Laravel Log Model Actions.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ihor Korotkyi",
+            "email": "marks.ihor@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MarksIhor\\LogModelActions\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["MarksIhor\\LogModelActions\\LogModelActionsServiceProvider"]
+        }
+    }
+}
