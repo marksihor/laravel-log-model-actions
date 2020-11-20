@@ -12,8 +12,10 @@ class LogService
         $this->log($model, ['type' => 'creating']);
     }
 
-    public function updated(Model $model, array $columns): void
+    public function updated(Model $model): void
     {
+        $column = Model::$logColumns ?? $model->getFillable() ?? [];
+        
         $data = ['type' => 'updating'];
         foreach ($columns as $column) {
             if ($model->isDirty($column)) {

@@ -13,6 +13,14 @@ trait Logable
         static::created(function ($model) {
             (new LogService())->created($model);
         });
+
+        static::updated(function ($model) {
+            (new LogService())->updated($model);
+        });
+
+        static::deleted(function ($model) {
+            (new LogService())->deleted($model);
+        });
     }
 
     public function logs()
