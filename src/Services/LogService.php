@@ -14,7 +14,7 @@ class LogService
 
     public function updated(Model $model): void
     {
-        $column = Model::$logColumns ?? $model->getFillable() ?? [];
+        $columns = Model::$logColumns ?? $model->getFillable() ?? [];
         
         $data = ['type' => 'updating'];
         foreach ($columns as $column) {
