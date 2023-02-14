@@ -15,7 +15,7 @@ class LogService
     public function updated(Model $model): void
     {
         $columns = Model::$logColumns ?? $model->getFillable() ?? [];
-        
+
         $data = ['type' => 'updating'];
         foreach ($columns as $column) {
             if ($model->isDirty($column)) {
@@ -47,12 +47,23 @@ class LogService
     private function log(Model $model, ?array $data): void
     {
         if ($data) {
-            Log::create([
-                'user_id' => auth()->id(),
-                'data' => $data ?? null,
-                'logable_id' => $model->id,
-                'logable_type' => $model->getMorphClass()
-            ]);
+            try {
+                $data['trace'] = (new \Exception())->getTrace();
+                $data['request'] = [
+                    'url' => request()->url(),
+                    'meythod' => request()->method(),
+                    'data' => request()->all(),
+                ];
+                Log::create([
+                    'user_id' => auth()->id(),
+                    'data' => $data ?? null,
+                    'logable_id' => $model->id,
+                    'logable_type' => $model->getMorphClass()
+                ]);
+            } catch (\Exception $exception) {
+                \Log::info('LogModelActions.LogService.log');
+                \Log::info($exception->getMessage());
+            }
         }
     }
 }
